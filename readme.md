@@ -1,0 +1,1 @@
+# Finds files with CRLF and replaces them with LF
