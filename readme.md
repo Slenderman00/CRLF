@@ -1,1 +1,4 @@
-# Finds files with CRLF and replaces them with LF
+# Replaces line endings in a project
+```
+# Python3 main.py
+```

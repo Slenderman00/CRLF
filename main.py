@@ -1,30 +1,23 @@
+from linefeed import LineFeed
 import os
 from pathlib import Path
 import pathlib
 
-WINDOWS_LINE_ENDING = b'\r\n'
-UNIX_LINE_ENDING = b'\n'
-
 current = pathlib.Path(__file__).parent.absolute()
+l1 = LineFeed(current)
 
-paths = []
-for root, d_names, f_names in os.walk('.'):
-    for f in f_names:
-        if '.py' in f:
-            paths.append(os.path.join(root, f))
+ending = input("fileformat ('.*', '.py', ...): ")
+l1.fetchFiles(ending)
+l1.printTemp()
 
+print("desired line ending: \n 1. Windows line ending \n 2. Unix line ending")
+lineending = input(': ')
+if lineending == '1' or lineending == '2':
+    l1.select()
+    l1.changeLineEnding(lineending)
+    l1.printSelection()
 
-for path in paths:
-    p1 = Path(path)
-    full = current / p1
-    
-    with open(full, 'rb') as open_file:
-        content = open_file.read()
+else:
+    exit(0)
 
-    if WINDOWS_LINE_ENDING in content:
-        print('fixing: ' + str(full))
-        content = content.replace(WINDOWS_LINE_ENDING, UNIX_LINE_ENDING)
-
-        with open(full, 'wb') as open_file:
-            open_file.write(content)
 
